@@ -27,3 +27,7 @@ npm i --save-dev webpack webpack-cli webpack-dev-server
 npm i react react-dom
 
 ```
+
+## Links
+
+- [React Hooks in Action](https://github.com/jrlarsen/react-hooks-in-action)
