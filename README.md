@@ -31,3 +31,5 @@ npm i react react-dom
 ## Links
 
 - [React Hooks in Action](https://github.com/jrlarsen/react-hooks-in-action)
+- [A Complete Guide to Grid](https://css-tricks.com/snippets/css/complete-guide-grid/)
+- [Robot Hash](https://robohash.org)
