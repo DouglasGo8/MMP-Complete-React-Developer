@@ -1,6 +1,7 @@
 const webpack = require("webpack");
 const HTMLWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+
 const mode = "development";
 
 const ASSET_PATH = process.env.ASSET_PATH || "/";
@@ -51,6 +52,20 @@ module.exports = {
               // Prefer `dart-sass`
               implementation: require("sass"),
               sourceMap: true,
+            },
+          },
+        ],
+      },
+      {
+        test: /\.svg$/,
+        use: [
+          {
+            loader: "babel-loader",
+          },
+          {
+            loader: "react-svg-loader",
+            options: {
+              jsx: true, // true outputs JSX tags
             },
           },
         ],
