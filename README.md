@@ -16,7 +16,9 @@ npm i --save-dev copy-webpack-plugin html-webpack-plugin mini-css-extract-plugin
 
 npm i --save-dev webpack webpack-cli webpack-dev-server
 
-npm i react react-dom
+npm i redux redux-logger react-redux
+
+npm i react react-dom redux redux-logger react-redux
 
 ```
 
@@ -29,3 +31,78 @@ npm i react react-dom
 - [Sass Loader](https://webpack.js.org/loaders/sass-loader/)
 - [Dynamic React Router Fix](https://webpack.js.org/guides/public-path/)
 - [SVG Loader](https://www.npmjs.com/package/react-svg-loader)
+
+## Basic Recipe Redux Setup
+
+```javascript
+
+// file user-reducer.js
+const INITIAL_STATE {
+    currentUser: null,
+}
+
+// Actions Offset
+const userReducer = (state = INITIAL_STATE, action) {
+    switch (action.type) {
+        case 'SET_CURRENT_USER':
+            return {
+                ...state,
+                currentUser: action.payload,
+            };
+        default:
+            return state;
+    }
+}
+
+export default userReducer;
+
+
+// file user-actions.js
+
+export const setCurrentUser = (user) => {
+    type: 'SET_CURRENT_USER',
+    payload: user
+}
+
+// file root-reducer.js
+import {combineReducers} from "redux";
+
+import useReducers from "./user/user-reducer";
+
+export default combineReducers({
+    user: useReducers
+});
+
+// file store.js
+
+import { createStore, applyMiddleware } from "redux";
+
+import rootReducer from "./root-reducer";
+
+const store = createStore(rootReducer, applyMiddleware());
+
+export default store;
+
+// file index.js
+
+import { Provider } from "react-redux";
+import store from "./redux/store";
+
+//
+
+mapStateToProps = (state) => {
+                //state.[key from Object].[property of object]
+    currentUser: state.user.currentUser
+}
+mapDispatchToProps = (dispatch) => {
+    setCurrentUser = (user) => dispatch(setCurrentUser(user))
+}; // manage action
+
+
+// prev state
+// action
+// next state
+
+<Provider store={store}><FooComponent /></Provider>
+
+```
