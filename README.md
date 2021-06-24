@@ -4,6 +4,13 @@
 
 ```shell
 
+npm i --save-dev @babel/cli @babel/core @babel/plugin-proposal-class-properties \
+  @babel/plugin-proposal-export-default-from @babel/plugin-transform-runtime \
+  @babel/polyfill @babel/preset-env @babel/preset-react \
+  babel-eslint babel-jest babel-loader babel-plugin-module-resolver \
+  babel-plugin-transform-class-properties babel-plugin-transform-runtime \
+  babel-polyfill
+
 npm i --save-dev eslint eslint-config-airbnb eslint-plugin-import eslint-plugin-jsx-a11y \
     eslint-plugin-node eslint-plugin-promise \
     eslint-plugin-react
@@ -18,7 +25,7 @@ npm i --save-dev webpack webpack-cli webpack-dev-server
 
 npm i redux redux-logger react-redux
 
-npm i react react-dom redux redux-logger react-redux
+npm i react react-dom react-router-dom reselect
 
 ```
 
@@ -32,23 +39,52 @@ npm i react react-dom redux redux-logger react-redux
 - [Dynamic React Router Fix](https://webpack.js.org/guides/public-path/)
 - [SVG Loader](https://www.npmjs.com/package/react-svg-loader)
 
-## Basic Recipe Redux Setup
+## Redux Fundamentals Concepts
 
 ```javascript
+// index.js
+/**
+ * Provider works like a Wrapper the Entire Application to use Redux
+ * it allow us to get access to all the thins related to the store
+ */
+import { Provider } from "react-redux";
+import store from "redux/store";
+//
+<Provider store={store}>
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>
+</Provider>;
 
-// file user-reducer.js
-const INITIAL_STATE {
-    currentUser: null,
+// project structure
+// |+ redux/root-reducer.js or index.js
+// |+ redux/user/reducer.js (folder optional but good practice to organize state by subject) the state will be represented by last state or initial state
+// action object is commonly represented by a bellow object
+{
+    type: 'RETRIEVE_VALID_USER',
+    payload: 'new_or_initial_payload'
 }
 
-// Actions Offset
-const userReducer = (state = INITIAL_STATE, action) {
+// +| redux/actions/user.js
+// Similar to setState React.js core
+export const setRetrieveValidUser = (user) => ({
+    type: 'RETRIEVE_VALID_USER',
+    payload: user,
+})
+
+// in a reducer.js file content
+const INITIAL_STATE = {
+    currentUser: null,
+    // other stuffs
+};
+
+const userReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
-        case 'SET_CURRENT_USER':
+        case 'RETRIEVE_VALID_USER':
             return {
                 ...state,
-                currentUser: action.payload,
-            };
+                currentUser: action.payload
+            }
         default:
             return state;
     }
@@ -57,52 +93,69 @@ const userReducer = (state = INITIAL_STATE, action) {
 export default userReducer;
 
 
-// file user-actions.js
-
-export const setCurrentUser = (user) => {
-    type: 'SET_CURRENT_USER',
-    payload: user
-}
-
-// file root-reducer.js
+// +| redux/root-reducer.js
 import {combineReducers} from "redux";
-
-import useReducers from "./user/user-reducer";
+import userReducer from "./userReducer";
 
 export default combineReducers({
-    user: useReducers
-});
+    user: userReducer, // function
+})
 
-// file store.js
+// +| redux/store.js
+import {createStore, applyMiddleware} from "redux";
+import logger from "redux-logger";
+import rootReducer from "root-reducer";
 
-import { createStore, applyMiddleware } from "redux";
+const middlewares = [logger];
 
-import rootReducer from "./root-reducer";
-
-const store = createStore(rootReducer, applyMiddleware());
+const store = createStore(rootReducer, applyMiddleware(...middlewares));
 
 export default store;
 
-// file index.js
+// +| FooComponent.js
 
-import { Provider } from "react-redux";
-import store from "./redux/store";
+import {connect} from "react-redux";
 
-//
+const FooComponent = ({myProperty}) => return <div>{myProperty.currentUser}</div>
 
-mapStateToProps = (state) => {
-                //state.[key from Object].[property of object]
-    currentUser: state.user.currentUser
+// the name can be anything, but bellow is a commonly used
+const mapStateToProps = (state) => ({
+    myProperty: state.user.currentUser,
+})
+
+export default connect(mapStateToProps)(FooComponent);
+
+// +| App.js (update The State) Hooks Mode
+import {connect} from "react-redux";
+import {setRetrieveValidUser} from "/redux/action/user";
+const App = ({retrieveValidUser, setRetrieveValidUser}) => {
+    useEffect = (() => {
+        const {user} = await api({method: 'GET', url: 'api/valid/user?id=123'});
+        props.setRetrieveValidUser(user);
+    });
 }
-mapDispatchToProps = (dispatch) => {
-    setCurrentUser = (user) => dispatch(setCurrentUser(user))
-}; // manage action
+const mapDispatchToProps = {setRetrieveValidUser};
 
+export default connect(null, mapDispatchToProps)(App);
 
-// prev state
-// action
-// next state
+// +| App.js as Stateful Mode
+import {connect} from "react-redux";
+import {setRetrieveValidUser} from "/redux/action/user";
+class App extends Component {
+    componentDidMount() {
+        const {setRetrieveValidUser} = this.props;
 
-<Provider store={store}><FooComponent /></Provider>
-
+        const {data} = axios({
+            ...
+        });
+        setRetrieveValidUser(data);
+    }
+}
+const mapStateToProps = ({user}) => ({
+    user: user.currentUser
+})
+const mapDispatchToProps = dispatch => ({
+    setRetrieveValidUser: user => dispatch(setRetrieveValidUser(user))
+})
+export default connect(mapStateToProps, mapDispatchToProps)(App);
 ```

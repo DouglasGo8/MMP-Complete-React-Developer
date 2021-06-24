@@ -2,12 +2,16 @@ import "./Button.scss";
 
 /**
  *
- * @param {*} param0
+ * @param {*} children
+ * @param {*} isGoogleSignIn
+ * @param {*} otherProps
  * @returns
  */
-const button = ({ children, isGoogleSignIn, ...otherProps }) => (
+const button = ({ children, isGoogleSignIn, inverted, ...otherProps }) => (
   <button
-    className={`${isGoogleSignIn ? "google-sign-in" : ""} custom-button`}
+    className={`${inverted ? "inverted" : ""} ${
+      isGoogleSignIn ? "google-sign-in" : ""
+    } custom-button`}
     {...otherProps}
   >
     {children}

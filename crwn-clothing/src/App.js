@@ -8,7 +8,6 @@ import Header from "./components/header/Header";
 
 import ShopPage from "./pages/shop/Shop";
 import HomePage from "./pages/home/HomePage";
-import SignInAndUp from "./pages/sign/SignInAndUp";
 
 import { setCurrentUser } from "./redux/user/user-actions";
 import SignIn from "./components/signin/SignIn";
