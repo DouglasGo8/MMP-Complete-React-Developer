@@ -1,5 +1,8 @@
+/* eslint-disable react/react-in-jsx-scope */
+/* eslint-disable arrow-body-style */
 import { connect } from "react-redux";
-
+import { createStructuredSelector } from "reselect";
+import { withRouter } from "react-router-dom";
 import "./CartDropDown.scss";
 
 import CustomButton from "../../button/Button";
@@ -12,21 +15,27 @@ import { selectCartItems } from "../../../redux/cart/cart-selector";
  *
  * @returns
  */
-const cartDropDown = ({ cartItems }) => {
+const cartDropDown = ({ cartItems, history }) => {
   return (
     <div className="cart-dropdown">
       <div className="cart-items">
-        {cartItems.map((item) => {
-          return <CartItem key={item.id} item={item} />;
-        })}
+        {cartItems.length ? (
+          cartItems.map((item) => {
+            return <CartItem key={item.id} item={item} />;
+          })
+        ) : (
+          <span className="empty-message">Your cart is empty</span>
+        )}
       </div>
-      <CustomButton>GO TO CHECKOUT</CustomButton>
+      <CustomButton onClick={() => history.push("/checkout")}>
+        GO TO CHECKOUT
+      </CustomButton>
     </div>
   );
 };
 
-const mapStateToProps = (state) => ({
-  cartItems: selectCartItems(state),
+const mapStateToProps = createStructuredSelector({
+  cartItems: selectCartItems,
 });
 
-export default connect(mapStateToProps)(cartDropDown);
+export default withRouter(connect(mapStateToProps)(cartDropDown));
