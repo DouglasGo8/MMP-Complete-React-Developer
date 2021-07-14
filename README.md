@@ -15,15 +15,15 @@ npm i --save-dev eslint eslint-config-airbnb eslint-plugin-import eslint-plugin-
     eslint-plugin-node eslint-plugin-promise \
     eslint-plugin-react
 
-npm i --save-dev css-loader file-loader html-loader react-hot-loader sass-loader \
-    style-loader react-svg-loader url-loader
+npm i --save-dev css-loader file-loader html-loader react-hot-loader sass-loader style-loader react-svg-loader url-loader
 
-npm i --save-dev copy-webpack-plugin html-webpack-plugin mini-css-extract-plugin \
-    sass node-sass
+npm i --save-dev copy-webpack-plugin html-webpack-plugin mini-css-extract-plugin sass node-sass
 
 npm i --save-dev webpack webpack-cli webpack-dev-server
 
-npm i redux redux-logger react-redux
+npm i redux redux-logger react-redux redux-persist
+
+npm install --save-dev prettier eslint-config-prettier eslint-plugin-prettier
 
 npm i react react-dom react-router-dom reselect
 
