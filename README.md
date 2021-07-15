@@ -25,6 +25,8 @@ npm i redux redux-logger react-redux redux-persist
 
 npm install --save-dev prettier eslint-config-prettier eslint-plugin-prettier
 
+npm i lodash.memoize
+
 npm i react react-dom react-router-dom reselect
 
 ```
