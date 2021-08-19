@@ -162,3 +162,74 @@ const mapDispatchToProps = dispatch => ({
 })
 export default connect(mapStateToProps, mapDispatchToProps)(App);
 ```
+
+## How create HOCs
+
+```javascript
+import UserProfile from "../components/UserProfile";
+
+
+import "./App.scss";
+
+export default function App() {
+  // https://jsonplaceholder.typicode.com/posts?userId=2
+  return (
+    <div className="App">
+      <UserProfile name="Yihua" email="yihua@mail.com" />
+    </div>
+  );
+}
+
+import withData from "../src/withData";
+
+/**
+ * @author:
+ *
+ */
+const userProfile = ({ data, name, email }) => {
+  return (
+    <div className="container">
+      <h1>{name}</h1>
+      <h2>{email}</h2>
+      Posts:
+      {data.map((post) => (
+        <div className="post" key={post.id}>
+          <h1>{post.title}</h1>
+          <p>{post.body}</p>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export default withData(
+  userProfile,
+  "https://jsonplaceholder.typicode.com/posts?userId=2"
+);
+
+
+import { Component } from "react";
+
+const withData = (wrappedComponent, dataSource) => {
+  class WithData extends Component {
+    state = {
+      data: []
+    };
+
+    async componentDidMount() {
+      fetch(dataSource)
+        .then((resp) => resp.json())
+        .then((data) => this.setState({ data: data.slice(0, 3) }));
+    }
+
+    render() {
+      return <wrappedComponent data={this.state.data} {...this.props} />;
+    }
+  }
+
+  return WithData;
+};
+
+export default withData;
+
+```

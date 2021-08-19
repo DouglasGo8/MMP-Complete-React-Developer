@@ -1,8 +1,8 @@
-import "./Shop.scss";
 import { Route } from "react-router-dom";
 import CollectionOverview from "../../components/collectionsOverview/CollectionOverview";
 import Collection from "../collection/Collection";
 
+import "./Shop.scss";
 /**
  *
  * @param {*} param0
