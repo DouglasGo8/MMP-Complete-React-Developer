@@ -1,0 +1,14 @@
+spring:
+  data:
+    mongodb:
+      database: admin
+      host: localhost
+      username: guest
+      password: welcome1
+  batch:
+    initialize-schema: embedded
+logging:
+  pattern:
+    console: "%blue{%d{HH:mm:ss.SSS}} [%t] %highlight{%-5level} %magenta{%c{1.}} - %msg%n"
+  level:
+    org.springframework: INFO

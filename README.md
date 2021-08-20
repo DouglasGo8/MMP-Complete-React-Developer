@@ -41,6 +41,7 @@ npm i react react-dom react-router-dom reselect
 - [Dynamic React Router Fix](https://webpack.js.org/guides/public-path/)
 - [SVG Loader](https://www.npmjs.com/package/react-svg-loader)
 - [Atom ReactJS Packages](https://medium.com/productivity-freak/my-atom-editor-setup-for-js-react-9726cd69ad20)
+- [Spring Batch JsonItemReader](https://spring.io/blog/2018/05/31/spring-batch-4-1-0-m1-released#add-a-new-json-item-reader)
 
 ## Redux Fundamentals Concepts
 
