@@ -36,7 +36,7 @@ public class MainBatch {
 
   @Bean
   @StepScope
-  public JsonItemReader<CrwnClothingCollection> crwnClothingColletionItemReader(@Value("#{jobParameters['crwnClothingJsonFile']}") Resource inputFile) {
+  public JsonItemReader<CrwnClothingCollection> crwnClothingColletionItemReader(@Value("#{jobParameters['crwnClothingJsonFile']}") final Resource inputFile) {
 
     final var jsonMap = new ObjectMapper();
     final var jsonObjectReader = new JacksonJsonObjectReader<>(CrwnClothingCollection.class);

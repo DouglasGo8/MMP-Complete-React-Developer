@@ -2,6 +2,8 @@
 
 ---
 
+- Uncaught TypeError: Cannot read properties of undefined (reading 'locals')
+
 ```shell
 
 npm i --save-dev @babel/cli @babel/core @babel/plugin-proposal-class-properties \
@@ -233,4 +235,16 @@ const withData = (wrappedComponent, dataSource) => {
 
 export default withData;
 
+```
+
+## Spring Batch command line
+
+```shell
+mvn clean compile -Dspring-boot.run.arguments=crwnClothingJsonFile=file:./src/main/resources/input/crwn-clothings-collection.json spring-boot:run
+```
+
+## Vert.x command line
+
+```shell
+mvn clean compile vertx:run
 ```
